@@ -43,13 +43,15 @@ public final class Game {
 
         public void move(Integer input) {
             double terminal = 4;
-            switch (input) {
-                case 38: if (velocity < terminal) {velocity += .2;} break; //fwd
-                case 40: if (velocity > -terminal) {velocity -= .2;} break; //bck
-                case 37: direction -= 3; break; //turn left
-                case 39: direction += 3; break; //turn right
-                case 32: if (!laserProcess.getState().equals(Thread.State.TIMED_WAITING)) {laserProcess.restart();}break;
-                default: System.out.println(input); Main.generateAsteroid();
+            if (input!=null){
+                switch (input) {
+                    case 38: if (velocity < terminal) {velocity += .2;} break; //fwd
+                    case 40: if (velocity > -terminal) {velocity -= .2;} break; //bck
+                    case 37: direction -= 3; break; //turn left
+                    case 39: direction += 3; break; //turn right
+                    case 32: if (!laserProcess.getState().equals(Thread.State.TIMED_WAITING)) {laserProcess.restart();}break;
+                    default: System.out.println(input); //Main.generateAsteroid();
+                }
             }
         }
 
@@ -139,7 +141,7 @@ public final class Game {
             super(x,y);
             this.direction = direction;
             this.size = size;
-            asteroid = new Calc.Polygon(x,y,Main.generator.nextInt(size)+size);
+            asteroid = new Calc.Polygon(x,y,size);
             speed = Main.generator.nextInt(5)+1;
             angularSpeed = Main.generator.nextInt(5) + 5;
 

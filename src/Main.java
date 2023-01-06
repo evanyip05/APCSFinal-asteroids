@@ -72,7 +72,16 @@ public class Main {
         @Override
         public void execute() throws InterruptedException {
             try {
-                asteroids.forEach(asteroid -> lasers.removeIf(laser -> asteroid.intersecting(laser.getLine())));
+                asteroids.forEach(asteroid -> {
+                    lasers.removeIf(laser -> {
+                        boolean intersecting = asteroid.intersecting(laser.getLine());
+                        if (intersecting) {
+                            asteroid.split();
+                        }
+                        return intersecting;
+                    });
+
+                });
 
             } catch (ConcurrentModificationException | NoSuchElementException | NullPointerException e) {
                 System.out.println(e + " collision error");
